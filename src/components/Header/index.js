@@ -1,5 +1,4 @@
 import {Link, withRouter} from 'react-router-dom'
-
 import Cookies from 'js-cookie'
 
 import CartContext from '../../context/CartContext'
@@ -13,23 +12,23 @@ const Header = props => {
     history.replace('/login')
   }
 
-  const renderCartItemCount = () => (
+  const renderCartItemsCount = () => (
     <CartContext.Consumer>
       {value => {
         const {cartList} = value
-
-        const cartCount = cartList.length
+        const cartItemsCount = cartList.length
 
         return (
           <>
-            {cartCount > 0 ? (
-              <span className="cart-count-badge">{cartCount}</span>
+            {cartItemsCount > 0 ? (
+              <span className="cart-count-badge">{cartList.length}</span>
             ) : null}
           </>
         )
       }}
     </CartContext.Consumer>
   )
+
   return (
     <nav className="nav-header">
       <div className="nav-content">
@@ -42,12 +41,15 @@ const Header = props => {
             />
           </Link>
 
-          <button type="button" className="nav-mobile-btn">
+          <button
+            type="button"
+            className="nav-mobile-btn"
+            onClick={onClickLogout}
+          >
             <img
               src="https://assets.ccbp.in/frontend/react-js/nxt-trendz-log-out-img.png"
               alt="nav logout"
-              className="nav-bar-image"
-              onClick={onClickLogout}
+              className="nav-bar-img"
             />
           </button>
         </div>
@@ -76,7 +78,7 @@ const Header = props => {
             <li className="nav-menu-item">
               <Link to="/cart" className="nav-link">
                 Cart
-                {renderCartItemCount()}
+                {renderCartItemsCount()}
               </Link>
             </li>
           </ul>
@@ -96,7 +98,7 @@ const Header = props => {
               <img
                 src="https://assets.ccbp.in/frontend/react-js/nxt-trendz-home-icon.png"
                 alt="nav home"
-                className="nav-bar-image"
+                className="nav-bar-img"
               />
             </Link>
           </li>
@@ -106,7 +108,7 @@ const Header = props => {
               <img
                 src="https://assets.ccbp.in/frontend/react-js/nxt-trendz-products-icon.png"
                 alt="nav products"
-                className="nav-bar-image"
+                className="nav-bar-img"
               />
             </Link>
           </li>
@@ -115,8 +117,9 @@ const Header = props => {
               <img
                 src="https://assets.ccbp.in/frontend/react-js/nxt-trendz-cart-icon.png"
                 alt="nav cart"
-                className="nav-bar-image"
+                className="nav-bar-img"
               />
+              {renderCartItemsCount()}
             </Link>
           </li>
         </ul>
